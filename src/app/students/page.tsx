@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { api, Button, ErrorNote, PageTitle } from "@/components/ui";
 import type { DataStatus } from "@/lib/template/dictionary";
-import type { FieldValue, Issue, ParsedCategory, ParsedStudent, ParseResult } from "@/lib/template/parse";
+import type { FieldValue, Issue, ParsedCategory, ParsedStudent } from "@/lib/template/parse";
 
-interface ParsedFile extends ParseResult {
-  fileName: string;
-  error?: string;
-}
+interface Submission { id: string; fileName: string; student: ParsedStudent }
+interface Report { fileName: string; saved: number; error?: string }
 
 const STATUS_STYLE: Record<DataStatus, string> = {
   "값 있음": "bg-emerald-100 text-emerald-800",
@@ -165,119 +165,114 @@ function StudentDetail({ student }: { student: ParsedStudent }) {
 }
 
 export default function StudentsPage() {
-  const [files, setFiles] = useState<ParsedFile[] | null>(null);
+  const [submissions, setSubmissions] = useState<Submission[]>([]);
+  const [report, setReport] = useState<Report[] | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<unknown>(null);
 
-  async function load(request: Promise<Response>) {
+  useEffect(() => {
+    api<{ submissions: Submission[] }>("/api/submissions").then((d) => setSubmissions(d.submissions)).catch(setError);
+  }, []);
+
+  async function send(form: FormData) {
     setLoading(true);
     setError(null);
     try {
-      const res = await request;
-      const body = await res.json();
-      if (!res.ok) throw new Error(body.error ?? "파일을 처리하지 못했습니다");
-      setFiles(body.files);
-      setSelected(null);
+      const data = await api<{ report: Report[]; submissions: Submission[] }>("/api/submissions", { method: "POST", body: form });
+      setReport(data.report);
+      setSubmissions(data.submissions);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "파일을 처리하지 못했습니다");
+      setError(e);
     } finally {
       setLoading(false);
     }
   }
-
   function upload(list: FileList | null) {
     if (!list || list.length === 0) return;
     const form = new FormData();
     for (const file of list) form.append("files", file);
-    load(fetch("/api/students/parse", { method: "POST", body: form }));
+    send(form);
+  }
+  function sample() {
+    const form = new FormData();
+    form.append("sample", "1");
+    send(form);
+  }
+  async function remove(id: string) {
+    try {
+      const data = await api<{ submissions: Submission[] }>("/api/submissions", { method: "DELETE", headers: { "content-type": "application/json" }, body: JSON.stringify({ id }) });
+      setSubmissions(data.submissions);
+      if (selected === id) setSelected(null);
+    } catch (e) {
+      setError(e);
+    }
   }
 
-  const students = (files ?? []).flatMap((f) => f.students.map((s) => ({ key: `${f.fileName}/${s.sheetName}`, student: s })));
-  const current = students.find((s) => s.key === selected)?.student ?? null;
+  const current = submissions.find((s) => s.id === selected)?.student ?? null;
   const count = (s: ParsedStudent, level: Issue["level"]) => s.issues.filter((i) => i.level === level).length;
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-semibold">학생 데이터 업로드·점검</h1>
-        <p className="mt-2 text-slate-600">
-          학생 데이터 양식(.xlsx)을 올리면 카테고리별 데이터 상태와 입력 오류를 점검합니다. 한 파일에 학생 시트가 여러 장이어도 됩니다.
-        </p>
-      </div>
+      <PageTitle title="3. 학생 데이터">
+        학생 데이터 양식(.xlsx)을 올리면 저장하고, 카테고리별 데이터 상태와 입력 오류를 점검합니다. 한 파일에 학생 시트가 여러 장이어도 됩니다. 같은 학번을 다시 올리면 새 데이터로 바뀝니다.
+      </PageTitle>
+      <ErrorNote error={error} />
 
       <div className="flex flex-wrap items-center gap-3 rounded-lg border border-dashed border-slate-300 bg-white p-5">
         <label className="cursor-pointer rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
           엑셀 파일 선택
           <input type="file" accept=".xlsx" multiple className="hidden" onChange={(e) => { upload(e.target.files); e.target.value = ""; }} />
         </label>
-        <button
-          type="button"
-          onClick={() => load(fetch("/api/students/parse"))}
-          className="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
-        >
-          샘플 학생 6명으로 보기
-        </button>
+        <Button onClick={sample}>샘플 학생 6명 올리기</Button>
         {loading && <span className="text-sm text-slate-500">읽는 중…</span>}
-        {error && <span className="text-sm text-red-700">{error}</span>}
+        {report?.map((r) => (
+          <span key={r.fileName} className={`text-sm ${r.error ? "text-red-700" : "text-emerald-700"}`}>{r.fileName}: {r.error ?? `${r.saved}명 저장`}</span>
+        ))}
       </div>
 
-      {files && (
+      {submissions.length > 0 && (
         <section className="space-y-3">
-          {files.map((f) => (
-            <p key={f.fileName} className="text-sm text-slate-600">
-              <span className="font-medium text-slate-900">{f.fileName}</span>
-              {f.error
-                ? <span className="ml-2 text-red-700">{f.error}</span>
-                : <span className="ml-2">학생 {f.students.length}명{f.rosterFound && " · 학사 명부 대조함"}{f.skippedSheets.some((s) => s.reason === "빈 양식") && " · 빈 양식 시트는 건너뜀"}</span>}
-            </p>
-          ))}
-
-          {students.length > 0 && (
-            <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
-              <table className="min-w-full text-left text-sm">
-                <thead className="bg-slate-100 text-xs text-slate-600">
-                  <tr>
-                    <th className="px-3 py-2">이름</th>
-                    <th className="px-3 py-2">학번</th>
-                    <th className="px-3 py-2">시트</th>
-                    <th className="px-3 py-2 text-right">값 있음</th>
-                    <th className="px-3 py-2 text-right">활동 없음</th>
-                    <th className="px-3 py-2 text-right">미수집</th>
-                    <th className="px-3 py-2 text-right">해당 없음</th>
-                    <th className="px-3 py-2 text-right">수집 완료율</th>
-                    <th className="px-3 py-2 text-right">오류</th>
-                    <th className="px-3 py-2 text-right">경고</th>
-                    <th className="px-3 py-2">평가 대상</th>
+          <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white">
+            <table className="min-w-full text-left text-sm">
+              <thead className="bg-slate-100 text-xs text-slate-600">
+                <tr>
+                  <th className="px-3 py-2">이름</th>
+                  <th className="px-3 py-2">학번</th>
+                  <th className="px-3 py-2 text-right">값 있음</th>
+                  <th className="px-3 py-2 text-right">활동 없음</th>
+                  <th className="px-3 py-2 text-right">미수집</th>
+                  <th className="px-3 py-2 text-right">해당 없음</th>
+                  <th className="px-3 py-2 text-right">수집 완료율</th>
+                  <th className="px-3 py-2 text-right">오류</th>
+                  <th className="px-3 py-2 text-right">경고</th>
+                  <th className="px-3 py-2">평가 대상</th>
+                  <th className="px-3 py-2" />
+                </tr>
+              </thead>
+              <tbody>
+                {submissions.map(({ id, student: s }) => (
+                  <tr key={id} onClick={() => setSelected(id)} className={`cursor-pointer border-t border-slate-100 hover:bg-blue-50 ${selected === id ? "bg-blue-50" : ""}`}>
+                    <td className="px-3 py-2 font-medium">{s.name ?? "(이름 없음)"}</td>
+                    <td className="px-3 py-2">{s.studentId ?? "-"}</td>
+                    {(["값 있음", "활동 없음", "미수집", "해당 없음"] as DataStatus[]).map((st) => (
+                      <td key={st} className="px-3 py-2 text-right tabular-nums">{s.counts[st]}</td>
+                    ))}
+                    <td className="px-3 py-2 text-right tabular-nums">{Math.round(s.completionRate * 100)}%</td>
+                    <td className={`px-3 py-2 text-right tabular-nums ${count(s, "error") ? "font-semibold text-red-700" : "text-slate-400"}`}>{count(s, "error")}</td>
+                    <td className={`px-3 py-2 text-right tabular-nums ${count(s, "warn") ? "font-semibold text-amber-700" : "text-slate-400"}`}>{count(s, "warn")}</td>
+                    <td className="px-3 py-2">{s.evaluable ? "대상" : <span className="text-red-700">제외</span>}</td>
+                    <td className="px-3 py-2 text-right">
+                      <button type="button" className="text-xs text-slate-400 hover:text-red-700" onClick={(e) => { e.stopPropagation(); remove(id); }}>삭제</button>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {students.map(({ key, student: s }) => (
-                    <tr
-                      key={key}
-                      onClick={() => setSelected(key)}
-                      className={`cursor-pointer border-t border-slate-100 hover:bg-blue-50 ${selected === key ? "bg-blue-50" : ""}`}
-                    >
-                      <td className="px-3 py-2 font-medium">
-                        {s.name ?? "(이름 없음)"}
-                        {s.isExample && <span className="ml-2 rounded bg-slate-100 px-1.5 py-0.5 text-xs font-normal text-slate-500">작성 예시</span>}
-                      </td>
-                      <td className="px-3 py-2">{s.studentId ?? "-"}</td>
-                      <td className="px-3 py-2 text-slate-500">{s.sheetName}</td>
-                      {(["값 있음", "활동 없음", "미수집", "해당 없음"] as DataStatus[]).map((st) => (
-                        <td key={st} className="px-3 py-2 text-right tabular-nums">{s.counts[st]}</td>
-                      ))}
-                      <td className="px-3 py-2 text-right tabular-nums">{Math.round(s.completionRate * 100)}%</td>
-                      <td className={`px-3 py-2 text-right tabular-nums ${count(s, "error") ? "font-semibold text-red-700" : "text-slate-400"}`}>{count(s, "error")}</td>
-                      <td className={`px-3 py-2 text-right tabular-nums ${count(s, "warn") ? "font-semibold text-amber-700" : "text-slate-400"}`}>{count(s, "warn")}</td>
-                      <td className="px-3 py-2">{s.evaluable ? "대상" : <span className="text-red-700">제외</span>}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-          {students.length > 0 && !current && <p className="text-sm text-slate-500">학생을 누르면 상세 점검 결과가 열립니다.</p>}
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-sm text-slate-500">
+            학생을 누르면 상세 점검 결과가 열립니다. 다 확인했으면 <Link href="/evaluate" className="font-medium text-blue-700 underline">평가 실행</Link>으로 가세요.
+          </p>
         </section>
       )}
 
