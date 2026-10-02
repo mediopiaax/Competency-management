@@ -1,0 +1,2123 @@
+{
+ "templateVersion": "v1",
+ "statusValues": [
+  "값 있음",
+  "활동 없음",
+  "미수집",
+  "해당 없음"
+ ],
+ "basicInfo": [
+  {
+   "id": "basic.f01",
+   "label": "학번",
+   "type": "number",
+   "format": "숫자 10자리(텍스트)",
+   "guide": "학사시스템 학번 그대로"
+  },
+  {
+   "id": "basic.f02",
+   "label": "이름",
+   "type": "text",
+   "format": "텍스트",
+   "guide": null
+  },
+  {
+   "id": "basic.f03",
+   "label": "소속 대학",
+   "type": "text",
+   "format": "텍스트",
+   "guide": "예: 공과대학"
+  },
+  {
+   "id": "basic.f04",
+   "label": "주전공(학과)",
+   "type": "text",
+   "format": "텍스트",
+   "guide": "예: 기계공학부"
+  },
+  {
+   "id": "basic.f05",
+   "label": "학년",
+   "type": "number",
+   "format": "숫자 1~6",
+   "guide": "학사시스템 기준 현재 학년(숫자만)"
+  },
+  {
+   "id": "basic.f06",
+   "label": "이수 완료 학기 수",
+   "type": "number",
+   "format": "숫자",
+   "guide": "휴학 학기 제외, 본교 기준. 학년 보정에 사용"
+  },
+  {
+   "id": "basic.f07",
+   "label": "학적 구분",
+   "type": "enum",
+   "format": "목록",
+   "guide": "대학원생은 별도 기준 적용",
+   "options": [
+    "학부",
+    "석사",
+    "박사",
+    "석박통합"
+   ]
+  },
+  {
+   "id": "basic.f08",
+   "label": "입학 구분",
+   "type": "enum",
+   "format": "목록",
+   "guide": "편입생은 본교 이수 학기만 반영",
+   "options": [
+    "신입학",
+    "편입학",
+    "재입학"
+   ]
+  },
+  {
+   "id": "basic.f09",
+   "label": "입학 연월",
+   "type": "yearMonth",
+   "format": "YYYY-MM",
+   "guide": "예: 2023-03"
+  },
+  {
+   "id": "basic.f10",
+   "label": "학적 상태",
+   "type": "enum",
+   "format": "목록",
+   "guide": null,
+   "options": [
+    "재학",
+    "휴학",
+    "수료"
+   ]
+  },
+  {
+   "id": "basic.f11",
+   "label": "공학인증 대상 계열",
+   "type": "enum",
+   "format": "목록",
+   "guide": "N이면 4번 카테고리는 '해당 없음'",
+   "options": [
+    "Y",
+    "N"
+   ]
+  },
+  {
+   "id": "basic.f12",
+   "label": "수집 기준일",
+   "type": "date",
+   "format": "YYYY-MM-DD",
+   "guide": "데이터 추출(또는 제출) 기준일"
+  },
+  {
+   "id": "basic.f13",
+   "label": "수집 경로",
+   "type": "enum",
+   "format": "목록",
+   "guide": null,
+   "options": [
+    "시스템 연동",
+    "학생 직접 입력",
+    "혼합"
+   ]
+  },
+  {
+   "id": "basic.f14",
+   "label": "개인정보 수집·이용 동의",
+   "type": "enum",
+   "format": "목록",
+   "guide": "N이면 평가 대상에서 제외",
+   "options": [
+    "Y",
+    "N"
+   ]
+  }
+ ],
+ "categories": [
+  {
+   "no": 1,
+   "id": "c01",
+   "group": "학업·교과",
+   "label": "성적데이터(전공·학기별)",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [
+    {
+     "id": "c01.f01",
+     "label": "전체 평점(누적)",
+     "type": "number",
+     "format": "숫자(소수 2자리)",
+     "guide": "예: 3.85"
+    },
+    {
+     "id": "c01.f02",
+     "label": "전공 평점(누적)",
+     "type": "number",
+     "format": "숫자(소수 2자리)",
+     "guide": "예: 3.92"
+    },
+    {
+     "id": "c01.f03",
+     "label": "평점 만점 기준",
+     "type": "number",
+     "format": "숫자",
+     "guide": "성균관대 4.5"
+    }
+   ],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c01.t01",
+      "label": "학기",
+      "type": "semester",
+      "format": "YYYY-1 / YYYY-2 / YYYY-여름 / YYYY-겨울"
+     },
+     {
+      "id": "c01.t02",
+      "label": "신청학점",
+      "type": "number",
+      "format": "숫자"
+     },
+     {
+      "id": "c01.t03",
+      "label": "취득학점",
+      "type": "number",
+      "format": "숫자"
+     },
+     {
+      "id": "c01.t04",
+      "label": "학기 평점",
+      "type": "number",
+      "format": "숫자"
+     },
+     {
+      "id": "c01.t05",
+      "label": "학기 전공 평점",
+      "type": "number",
+      "format": "숫자"
+     },
+     {
+      "id": "c01.t06",
+      "label": "비고",
+      "type": "text",
+      "format": "휴학·계절 등"
+     }
+    ],
+    "templateRows": 8
+   },
+   "meta": {
+    "출처": "학사시스템(성적)",
+    "확보 구분": "기존 + SKKU 확보가능",
+    "관련 역량": "학업성취 / 직무전문성",
+    "비고": "[C] 전공별·학기별 성적 통합. 학기별 추이로 '성장' 지표 추가 가능"
+   }
+  },
+  {
+   "no": 2,
+   "id": "c02",
+   "group": "학업·교과",
+   "label": "수업유형별 성적",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c02.t01",
+      "label": "과목명",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c02.t02",
+      "label": "학기",
+      "type": "semester",
+      "format": "YYYY-1 / YYYY-2 / YYYY-여름 / YYYY-겨울"
+     },
+     {
+      "id": "c02.t03",
+      "label": "수업유형",
+      "type": "enum",
+      "format": "[발표형 / 토론형 / 과제·보고서형 / PBL형]",
+      "options": [
+       "발표형",
+       "토론형",
+       "과제·보고서형",
+       "PBL형"
+      ]
+     },
+     {
+      "id": "c02.t04",
+      "label": "과목 성적",
+      "type": "enum",
+      "format": "[A+ / A0 / B+ / B0 / C+ / C0 / D+ / D0 / F / P]",
+      "options": [
+       "A+",
+       "A0",
+       "B+",
+       "B0",
+       "C+",
+       "C0",
+       "D+",
+       "D0",
+       "F",
+       "P"
+      ]
+     },
+     {
+      "id": "c02.t05",
+      "label": "과제·보고서 점수",
+      "type": "number",
+      "format": "숫자(100점)"
+     },
+     {
+      "id": "c02.t06",
+      "label": "비고",
+      "type": "text",
+      "format": "텍스트"
+     }
+    ],
+    "templateRows": 5
+   },
+   "meta": {
+    "출처": "학사시스템(과목별 성적) + LMS(과제점수)",
+    "확보 구분": "기존",
+    "관련 역량": "발표력 / 논리적사고 / 학업성취",
+    "비고": "과목에 '발표형·토론형' 태그가 있어야 자동 분류 가능"
+   }
+  },
+  {
+   "no": 3,
+   "id": "c03",
+   "group": "학업·교과",
+   "label": "수강과목·심화·융합 이수",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [
+    {
+     "id": "c03.f01",
+     "label": "총 이수학점",
+     "type": "number",
+     "format": "숫자",
+     "guide": "예: 124"
+    },
+    {
+     "id": "c03.f02",
+     "label": "심화과목 이수 과목 수",
+     "type": "number",
+     "format": "숫자",
+     "guide": "없으면 0"
+    }
+   ],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c03.t01",
+      "label": "전공 구분",
+      "type": "enum",
+      "format": "[주전공 / 복수전공 / 부전공 / 연계전공 / 융합전공 / 심화전공]",
+      "options": [
+       "주전공",
+       "복수전공",
+       "부전공",
+       "연계전공",
+       "융합전공",
+       "심화전공"
+      ]
+     },
+     {
+      "id": "c03.t02",
+      "label": "전공명",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c03.t03",
+      "label": "이수 상태",
+      "type": "enum",
+      "format": "[신청 / 이수중 / 이수완료]",
+      "options": [
+       "신청",
+       "이수중",
+       "이수완료"
+      ]
+     },
+     {
+      "id": "c03.t04",
+      "label": "이수 학점",
+      "type": "number",
+      "format": "숫자"
+     }
+    ],
+    "templateRows": 4
+   },
+   "meta": {
+    "출처": "학사시스템(수강내역)",
+    "확보 구분": "기존 + SKKU 확보가능",
+    "관련 역량": "탐구력 / 종합적사고력(융합적 사고) / 직무전문성",
+    "비고": "마인드맵의 '융합 전공'은 기존 데이터셋에 없음 → 수강내역에서 도출"
+   }
+  },
+  {
+   "no": 4,
+   "id": "c04",
+   "group": "학업·교과",
+   "label": "공학인증",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [
+    {
+     "id": "c04.f01",
+     "label": "공학인증 대상 여부",
+     "type": "enum",
+     "format": "목록",
+     "guide": "비대상 전공이면 상태를 '해당 없음'으로  [대상 / 비대상]",
+     "options": [
+      "대상",
+      "비대상"
+     ]
+    },
+    {
+     "id": "c04.f02",
+     "label": "인증 프로그램명",
+     "type": "text",
+     "format": "텍스트",
+     "guide": "예: 기계공학 공학교육인증"
+    },
+    {
+     "id": "c04.f03",
+     "label": "이수 상태",
+     "type": "enum",
+     "format": "목록",
+     "guide": "[이수중 / 이수완료 / 미이수 / 포기]",
+     "options": [
+      "이수중",
+      "이수완료",
+      "미이수",
+      "포기"
+     ]
+    }
+   ],
+   "table": null,
+   "meta": {
+    "출처": "학사시스템",
+    "확보 구분": "SKKU 확보가능",
+    "관련 역량": "직무전문성",
+    "비고": "공학계열 한정 → 비대상 전공은 '해당 없음' 처리(불이익 방지)"
+   }
+  },
+  {
+   "no": 5,
+   "id": "c05",
+   "group": "학습행동(LMS)",
+   "label": "LMS 학습데이터",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [
+    {
+     "id": "c05.f01",
+     "label": "집계 기간",
+     "type": "text",
+     "format": "텍스트",
+     "guide": "예: 2026-1학기"
+    },
+    {
+     "id": "c05.f02",
+     "label": "출석률(%)",
+     "type": "number",
+     "format": "숫자 0~100",
+     "guide": "% 기호 없이 숫자만"
+    },
+    {
+     "id": "c05.f03",
+     "label": "과제 기한 준수율(%)",
+     "type": "number",
+     "format": "숫자 0~100",
+     "guide": "% 기호 없이 숫자만"
+    },
+    {
+     "id": "c05.f04",
+     "label": "주당 평균 로그인 횟수",
+     "type": "number",
+     "format": "숫자",
+     "guide": "회/주"
+    },
+    {
+     "id": "c05.f05",
+     "label": "퀴즈 풀이 횟수(누적)",
+     "type": "number",
+     "format": "숫자",
+     "guide": "집계 기간 내 누적"
+    },
+    {
+     "id": "c05.f06",
+     "label": "학습계획 달성률(%)",
+     "type": "number",
+     "format": "숫자 0~100",
+     "guide": null
+    }
+   ],
+   "table": null,
+   "meta": {
+    "출처": "LMS(i-Campus) · 출석앱",
+    "확보 구분": "기존",
+    "관련 역량": "자기관리 / 성실성",
+    "비고": "마인드맵 '퀴즈 생성 주기' vs 데이터 '퀴즈풀이횟수' 용어 통일 필요"
+   }
+  },
+  {
+   "no": 6,
+   "id": "c06",
+   "group": "학습행동(LMS)",
+   "label": "교수면담·학업상담",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [
+    {
+     "id": "c06.f01",
+     "label": "집계 기간",
+     "type": "text",
+     "format": "텍스트",
+     "guide": "예: 입학~2026-1"
+    },
+    {
+     "id": "c06.f02",
+     "label": "교수 면담 횟수(누적)",
+     "type": "number",
+     "format": "숫자",
+     "guide": null
+    },
+    {
+     "id": "c06.f03",
+     "label": "학업상담 횟수(누적)",
+     "type": "number",
+     "format": "숫자",
+     "guide": null
+    },
+    {
+     "id": "c06.f04",
+     "label": "주요 상담 주제",
+     "type": "text",
+     "format": "텍스트",
+     "guide": "짧게 요약"
+    }
+   ],
+   "table": null,
+   "meta": {
+    "출처": "상담 기록 시스템 · LMS",
+    "확보 구분": "기존",
+    "관련 역량": "성실성(수업참여도) / 소통능력",
+    "비고": "기존 데이터셋에선 LMS 항목 안에 섞여 있어 분리"
+   }
+  },
+  {
+   "no": 7,
+   "id": "c07",
+   "group": "학습행동(LMS)",
+   "label": "토론·게시판 참여",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [
+    {
+     "id": "c07.f01",
+     "label": "집계 기간",
+     "type": "text",
+     "format": "텍스트",
+     "guide": "예: 2026-1학기"
+    },
+    {
+     "id": "c07.f02",
+     "label": "토론방 게시글 수",
+     "type": "number",
+     "format": "숫자",
+     "guide": null
+    },
+    {
+     "id": "c07.f03",
+     "label": "토론방 댓글 수",
+     "type": "number",
+     "format": "숫자",
+     "guide": null
+    },
+    {
+     "id": "c07.f04",
+     "label": "질의응답 참여 횟수",
+     "type": "number",
+     "format": "숫자",
+     "guide": null
+    }
+   ],
+   "table": null,
+   "meta": {
+    "출처": "LMS(i-Campus)",
+    "확보 구분": "추가 제안",
+    "관련 역량": "소통능력 / 수업참여도",
+    "비고": "교수 관심 '소통능력'의 정량 근거 보강"
+   }
+  },
+  {
+   "no": 8,
+   "id": "c08",
+   "group": "연구·학술",
+   "label": "학회·연구활동",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c08.t01",
+      "label": "활동 유형",
+      "type": "enum",
+      "format": "[학부연구생 / URP / 학회 / 연구실 인턴 / 팀연구프로젝트]",
+      "options": [
+       "학부연구생",
+       "URP",
+       "학회",
+       "연구실 인턴",
+       "팀연구프로젝트"
+      ]
+     },
+     {
+      "id": "c08.t02",
+      "label": "활동명·소속",
+      "type": "text",
+      "format": "연구실/학회명"
+     },
+     {
+      "id": "c08.t03",
+      "label": "역할",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c08.t04",
+      "label": "시작",
+      "type": "yearMonth",
+      "format": "YYYY-MM"
+     },
+     {
+      "id": "c08.t05",
+      "label": "종료",
+      "type": "yearMonth",
+      "format": "YYYY-MM / 진행중"
+     },
+     {
+      "id": "c08.t06",
+      "label": "기간(개월)",
+      "type": "number",
+      "format": "숫자"
+     },
+     {
+      "id": "c08.t07",
+      "label": "주요 성과",
+      "type": "text",
+      "format": "텍스트"
+     }
+    ],
+    "templateRows": 4
+   },
+   "meta": {
+    "출처": "비교과·연구지원 시스템",
+    "확보 구분": "기존 + SKKU 확보가능",
+    "관련 역량": "탐구력 / 문제해결력",
+    "비고": "[B] 학회·연구 + [C] URP·팀연구프로젝트 통합"
+   }
+  },
+  {
+   "no": 9,
+   "id": "c09",
+   "group": "연구·학술",
+   "label": "정보탐색 결과물(논문·보고서)",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c09.t01",
+      "label": "유형",
+      "type": "enum",
+      "format": "[논문 / 보고서 / 학술발표자료]",
+      "options": [
+       "논문",
+       "보고서",
+       "학술발표자료"
+      ]
+     },
+     {
+      "id": "c09.t02",
+      "label": "제목",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c09.t03",
+      "label": "게재 수준",
+      "type": "enum",
+      "format": "[국제학술지 / 국내학술지 / 국제학술대회 / 국내학술대회 / 교내]",
+      "options": [
+       "국제학술지",
+       "국내학술지",
+       "국제학술대회",
+       "국내학술대회",
+       "교내"
+      ]
+     },
+     {
+      "id": "c09.t04",
+      "label": "진행 상태",
+      "type": "enum",
+      "format": "[게재 / 게재승인 / 투고 / 작성중]",
+      "options": [
+       "게재",
+       "게재승인",
+       "투고",
+       "작성중"
+      ]
+     },
+     {
+      "id": "c09.t05",
+      "label": "저자 구분",
+      "type": "enum",
+      "format": "[단독 / 제1저자 / 공동저자]",
+      "options": [
+       "단독",
+       "제1저자",
+       "공동저자"
+      ]
+     },
+     {
+      "id": "c09.t06",
+      "label": "발표·게재 연월",
+      "type": "yearMonth",
+      "format": "YYYY-MM"
+     }
+    ],
+    "templateRows": 3
+   },
+   "meta": {
+    "출처": "학생 등록(포트폴리오)",
+    "확보 구분": "기존",
+    "관련 역량": "자원·정보기술활용(정보탐색) / 논리적사고",
+    "비고": "게재 수준(학술지·학회·교내) 구분 기준 필요"
+   }
+  },
+  {
+   "no": 10,
+   "id": "c10",
+   "group": "연구·학술",
+   "label": "TA 활동",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c10.t01",
+      "label": "과목명",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c10.t02",
+      "label": "학기",
+      "type": "semester",
+      "format": "YYYY-1 / YYYY-2 / YYYY-여름 / YYYY-겨울"
+     },
+     {
+      "id": "c10.t03",
+      "label": "기간(개월)",
+      "type": "number",
+      "format": "숫자"
+     },
+     {
+      "id": "c10.t04",
+      "label": "주요 역할",
+      "type": "text",
+      "format": "텍스트"
+     }
+    ],
+    "templateRows": 3
+   },
+   "meta": {
+    "출처": "학사시스템 · 교수학습센터",
+    "확보 구분": "SKKU 확보가능",
+    "관련 역량": "직무전문성 / 커뮤니케이션 / 책임감",
+    "비고": "기존 데이터셋에 없는 신규 근거"
+   }
+  },
+  {
+   "no": 11,
+   "id": "c11",
+   "group": "실무·진로",
+   "label": "인턴·현장실습",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c11.t01",
+      "label": "유형",
+      "type": "enum",
+      "format": "[인턴십 / 현장실습 / 연구체험 / 문제해결프로젝트]",
+      "options": [
+       "인턴십",
+       "현장실습",
+       "연구체험",
+       "문제해결프로젝트"
+      ]
+     },
+     {
+      "id": "c11.t02",
+      "label": "기관명",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c11.t03",
+      "label": "직무·부서",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c11.t04",
+      "label": "시작",
+      "type": "yearMonth",
+      "format": "YYYY-MM"
+     },
+     {
+      "id": "c11.t05",
+      "label": "종료",
+      "type": "yearMonth",
+      "format": "YYYY-MM"
+     },
+     {
+      "id": "c11.t06",
+      "label": "기간(개월)",
+      "type": "number",
+      "format": "숫자"
+     },
+     {
+      "id": "c11.t07",
+      "label": "전공 관련성",
+      "type": "enum",
+      "format": "[관련 / 일부 관련 / 무관]",
+      "options": [
+       "관련",
+       "일부 관련",
+       "무관"
+      ]
+     },
+     {
+      "id": "c11.t08",
+      "label": "3품 인정",
+      "type": "enum",
+      "format": "[Y / N]",
+      "options": [
+       "Y",
+       "N"
+      ]
+     }
+    ],
+    "templateRows": 3
+   },
+   "meta": {
+    "출처": "현장실습 지원 시스템 · 3품(인턴십)",
+    "확보 구분": "기존 + SKKU 확보가능",
+    "관련 역량": "직무전문성 / 커뮤니케이션(협업)",
+    "비고": "기간(개월)과 직무 관련성을 함께 추출"
+   }
+  },
+  {
+   "no": 12,
+   "id": "c12",
+   "group": "실무·진로",
+   "label": "아르바이트경험",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c12.t01",
+      "label": "업종",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c12.t02",
+      "label": "직무",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c12.t03",
+      "label": "기간(개월)",
+      "type": "number",
+      "format": "숫자"
+     },
+     {
+      "id": "c12.t04",
+      "label": "주당 근무시간",
+      "type": "number",
+      "format": "숫자"
+     },
+     {
+      "id": "c12.t05",
+      "label": "증빙",
+      "type": "enum",
+      "format": "[고용보험 / 재직·경력증명 / 없음]",
+      "options": [
+       "고용보험",
+       "재직·경력증명",
+       "없음"
+      ]
+     }
+    ],
+    "templateRows": 3
+   },
+   "meta": {
+    "출처": "학생 등록(고용보험 자격이력 등)",
+    "확보 구분": "기존",
+    "관련 역량": "커뮤니케이션 / 책임감",
+    "비고": "증빙 신뢰도 낮음 → 기간 위주 정량화 권장"
+   }
+  },
+  {
+   "no": 13,
+   "id": "c13",
+   "group": "실무·진로",
+   "label": "진로설계·취업상담",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [
+    {
+     "id": "c13.f01",
+     "label": "진로·취업 상담 횟수(누적)",
+     "type": "number",
+     "format": "숫자",
+     "guide": null
+    },
+    {
+     "id": "c13.f02",
+     "label": "진로 목표 설정 여부",
+     "type": "enum",
+     "format": "목록",
+     "guide": "[Y / N]",
+     "options": [
+      "Y",
+      "N"
+     ]
+    },
+    {
+     "id": "c13.f03",
+     "label": "희망 직무·분야",
+     "type": "text",
+     "format": "텍스트",
+     "guide": null
+    },
+    {
+     "id": "c13.f04",
+     "label": "진로 목표 기록",
+     "type": "narrative",
+     "format": "서술",
+     "guide": "1~3문장"
+    }
+   ],
+   "table": null,
+   "meta": {
+    "출처": "경력개발 · 상담 시스템",
+    "확보 구분": "추가 제안",
+    "관련 역량": "자기관리(계획 수립) / 직무전문성",
+    "비고": "'계획 수립 및 실행 능력'의 근거가 LMS 하나뿐인 공백 보완"
+   }
+  },
+  {
+   "no": 14,
+   "id": "c14",
+   "group": "창의·도전",
+   "label": "공모전 참가·수상",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c14.t01",
+      "label": "대회명",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c14.t02",
+      "label": "주관기관",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c14.t03",
+      "label": "주관 수준",
+      "type": "enum",
+      "format": "[교내 / 지역 / 전국 / 국제]",
+      "options": [
+       "교내",
+       "지역",
+       "전국",
+       "국제"
+      ]
+     },
+     {
+      "id": "c14.t04",
+      "label": "결과",
+      "type": "enum",
+      "format": "[참가 / 입선 / 장려 / 우수 / 최우수 / 대상]",
+      "options": [
+       "참가",
+       "입선",
+       "장려",
+       "우수",
+       "최우수",
+       "대상"
+      ]
+     },
+     {
+      "id": "c14.t05",
+      "label": "참가 형태",
+      "type": "enum",
+      "format": "[개인 / 팀]",
+      "options": [
+       "개인",
+       "팀"
+      ]
+     },
+     {
+      "id": "c14.t06",
+      "label": "본인 역할",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c14.t07",
+      "label": "연월",
+      "type": "yearMonth",
+      "format": "YYYY-MM"
+     }
+    ],
+    "templateRows": 5
+   },
+   "meta": {
+    "출처": "비교과 시스템 · 3품(창의)",
+    "확보 구분": "기존 + SKKU 확보가능",
+    "관련 역량": "창의 / 종합적사고력 / 문제해결력 / 도전정신",
+    "비고": "수상 등급 × 주관 수준(교내·전국·국제) 매핑 필요"
+   }
+  },
+  {
+   "no": 15,
+   "id": "c15",
+   "group": "창의·도전",
+   "label": "창업활동",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c15.t01",
+      "label": "유형",
+      "type": "enum",
+      "format": "[창업교과목 / 창업경진대회 / 사업자등록 / 창업동아리]",
+      "options": [
+       "창업교과목",
+       "창업경진대회",
+       "사업자등록",
+       "창업동아리"
+      ]
+     },
+     {
+      "id": "c15.t02",
+      "label": "명칭·내용",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c15.t03",
+      "label": "결과",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c15.t04",
+      "label": "연월",
+      "type": "yearMonth",
+      "format": "YYYY-MM"
+     }
+    ],
+    "templateRows": 2
+   },
+   "meta": {
+    "출처": "학사시스템 · 창업지원 · 3품(창의)",
+    "확보 구분": "기존 + SKKU 확보가능",
+    "관련 역량": "창의 / 도전정신"
+   }
+  },
+  {
+   "no": 16,
+   "id": "c16",
+   "group": "창의·도전",
+   "label": "특허출원·SW 등록",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c16.t01",
+      "label": "유형",
+      "type": "enum",
+      "format": "[특허 / 실용신안 / 디자인 / SW등록]",
+      "options": [
+       "특허",
+       "실용신안",
+       "디자인",
+       "SW등록"
+      ]
+     },
+     {
+      "id": "c16.t02",
+      "label": "명칭",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c16.t03",
+      "label": "진행 상태",
+      "type": "enum",
+      "format": "[출원 / 등록]",
+      "options": [
+       "출원",
+       "등록"
+      ]
+     },
+     {
+      "id": "c16.t04",
+      "label": "출원·등록번호",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c16.t05",
+      "label": "연월",
+      "type": "yearMonth",
+      "format": "YYYY-MM"
+     },
+     {
+      "id": "c16.t06",
+      "label": "권리 구분",
+      "type": "enum",
+      "format": "[단독 / 공동]",
+      "options": [
+       "단독",
+       "공동"
+      ]
+     }
+    ],
+    "templateRows": 2
+   },
+   "meta": {
+    "출처": "3품(창의) 인증 · 학생 등록",
+    "확보 구분": "SKKU 확보가능",
+    "관련 역량": "창의 / 도전정신 / 직무전문성",
+    "비고": "기존 데이터셋에 없는 신규 근거"
+   }
+  },
+  {
+   "no": 17,
+   "id": "c17",
+   "group": "글로벌",
+   "label": "교환학생·해외경험",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c17.t01",
+      "label": "유형",
+      "type": "enum",
+      "format": "[교환학생 / 어학연수 / 해외봉사 / 국제연구 / 국제문화체험 / 해외학습]",
+      "options": [
+       "교환학생",
+       "어학연수",
+       "해외봉사",
+       "국제연구",
+       "국제문화체험",
+       "해외학습"
+      ]
+     },
+     {
+      "id": "c17.t02",
+      "label": "국가",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c17.t03",
+      "label": "기관·프로그램명",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c17.t04",
+      "label": "기간(주)",
+      "type": "number",
+      "format": "숫자"
+     },
+     {
+      "id": "c17.t05",
+      "label": "시작 연월",
+      "type": "yearMonth",
+      "format": "YYYY-MM"
+     },
+     {
+      "id": "c17.t06",
+      "label": "3품 인정",
+      "type": "enum",
+      "format": "[Y / N]",
+      "options": [
+       "Y",
+       "N"
+      ]
+     }
+    ],
+    "templateRows": 3
+   },
+   "meta": {
+    "출처": "국제처 · 3품(글로벌)",
+    "확보 구분": "기존 + SKKU 확보가능",
+    "관련 역량": "글로벌(문화적 수용능력)",
+    "비고": "[C] 국제연구·국제문화체험 항목 추가"
+   }
+  },
+  {
+   "no": 18,
+   "id": "c18",
+   "group": "글로벌",
+   "label": "외국어 수업 이수",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [
+    {
+     "id": "c18.f01",
+     "label": "국제어 강의 이수 과목 수",
+     "type": "number",
+     "format": "숫자",
+     "guide": "없으면 0"
+    },
+    {
+     "id": "c18.f02",
+     "label": "국제어 강의 이수 학점",
+     "type": "number",
+     "format": "숫자",
+     "guide": null
+    },
+    {
+     "id": "c18.f03",
+     "label": "강의 언어",
+     "type": "text",
+     "format": "텍스트",
+     "guide": "예: 영어"
+    }
+   ],
+   "table": null,
+   "meta": {
+    "출처": "학사시스템(수강내역)",
+    "확보 구분": "SKKU 확보가능",
+    "관련 역량": "글로벌(외국어 능력)",
+    "비고": "마인드맵(기업 관심-글로벌)에 있으나 기존 데이터셋에 없음"
+   }
+  },
+  {
+   "no": 19,
+   "id": "c19",
+   "group": "디지털·AI",
+   "label": "AI교육 이수내역",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c19.t01",
+      "label": "구분",
+      "type": "enum",
+      "format": "[교과 / 비교과 / 3품(AI)]",
+      "options": [
+       "교과",
+       "비교과",
+       "3품(AI)"
+      ]
+     },
+     {
+      "id": "c19.t02",
+      "label": "교육명",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c19.t03",
+      "label": "이수 시간(h)",
+      "type": "number",
+      "format": "숫자"
+     },
+     {
+      "id": "c19.t04",
+      "label": "이수 연월",
+      "type": "yearMonth",
+      "format": "YYYY-MM"
+     },
+     {
+      "id": "c19.t05",
+      "label": "이수 여부",
+      "type": "enum",
+      "format": "[이수 / 수강중 / 미이수]",
+      "options": [
+       "이수",
+       "수강중",
+       "미이수"
+      ]
+     }
+    ],
+    "templateRows": 4
+   },
+   "meta": {
+    "출처": "학사시스템 · 비교과 · 3품(AI)",
+    "확보 구분": "기존 + SKKU 확보가능",
+    "관련 역량": "자원·정보기술활용 / 디지털리터러시",
+    "비고": "이수 '시간'까지 받으면 정량화 쉬워짐"
+   }
+  },
+  {
+   "no": 20,
+   "id": "c20",
+   "group": "디지털·AI",
+   "label": "AI 프로젝트·대회",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c20.t01",
+      "label": "유형",
+      "type": "enum",
+      "format": "[AI캡스톤 / AI대회 / AI공모전 / AI프로젝트]",
+      "options": [
+       "AI캡스톤",
+       "AI대회",
+       "AI공모전",
+       "AI프로젝트"
+      ]
+     },
+     {
+      "id": "c20.t02",
+      "label": "명칭",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c20.t03",
+      "label": "본인 역할",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c20.t04",
+      "label": "결과·산출물",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c20.t05",
+      "label": "주관 수준",
+      "type": "enum",
+      "format": "[교내 / 지역 / 전국 / 국제]",
+      "options": [
+       "교내",
+       "지역",
+       "전국",
+       "국제"
+      ]
+     },
+     {
+      "id": "c20.t06",
+      "label": "연월",
+      "type": "yearMonth",
+      "format": "YYYY-MM"
+     }
+    ],
+    "templateRows": 3
+   },
+   "meta": {
+    "출처": "학사시스템 · 3품(AI)",
+    "확보 구분": "SKKU 확보가능",
+    "관련 역량": "디지털리터러시(AI 활용) / 문제해결력",
+    "비고": "공모전 항목과 중복 가산되지 않게 분리"
+   }
+  },
+  {
+   "no": 21,
+   "id": "c21",
+   "group": "디지털·AI",
+   "label": "협업툴 활용경험",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c21.t01",
+      "label": "도구명",
+      "type": "text",
+      "format": "한 칸에 하나"
+     },
+     {
+      "id": "c21.t02",
+      "label": "활용 수준",
+      "type": "enum",
+      "format": "[기초 / 활용 / 능숙]",
+      "options": [
+       "기초",
+       "활용",
+       "능숙"
+      ]
+     },
+     {
+      "id": "c21.t03",
+      "label": "활용 맥락",
+      "type": "narrative",
+      "format": "서술"
+     }
+    ],
+    "templateRows": 4
+   },
+   "meta": {
+    "출처": "학생 등록",
+    "확보 구분": "기존",
+    "관련 역량": "자원·정보기술활용 / 디지털리터러시",
+    "비고": "자기 서술 위주 → 정성 판단 + 낮은 가중치 권장"
+   }
+  },
+  {
+   "no": 22,
+   "id": "c22",
+   "group": "공동체·리더십",
+   "label": "동아리·학생회 활동",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c22.t01",
+      "label": "유형",
+      "type": "enum",
+      "format": "[동아리 / 학생회 / 학회 / 기타단체]",
+      "options": [
+       "동아리",
+       "학생회",
+       "학회",
+       "기타단체"
+      ]
+     },
+     {
+      "id": "c22.t02",
+      "label": "단체명",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c22.t03",
+      "label": "직책",
+      "type": "enum",
+      "format": "[회장 / 부회장 / 부장 / 총무 / 부원]",
+      "options": [
+       "회장",
+       "부회장",
+       "부장",
+       "총무",
+       "부원"
+      ]
+     },
+     {
+      "id": "c22.t04",
+      "label": "시작",
+      "type": "yearMonth",
+      "format": "YYYY-MM"
+     },
+     {
+      "id": "c22.t05",
+      "label": "종료",
+      "type": "yearMonth",
+      "format": "YYYY-MM / 진행중"
+     },
+     {
+      "id": "c22.t06",
+      "label": "기간(개월)",
+      "type": "number",
+      "format": "숫자"
+     },
+     {
+      "id": "c22.t07",
+      "label": "단체 규모(명)",
+      "type": "number",
+      "format": "숫자"
+     },
+     {
+      "id": "c22.t08",
+      "label": "주요 활동·성과",
+      "type": "text",
+      "format": "텍스트"
+     }
+    ],
+    "templateRows": 4
+   },
+   "meta": {
+    "출처": "비교과 시스템 · 학생 등록",
+    "확보 구분": "기존 + SKKU 확보가능",
+    "관련 역량": "대인관계 / 리더십 / 커뮤니케이션",
+    "비고": "직책(회장·부장·총무·부원) × 기간으로 정량화"
+   }
+  },
+  {
+   "no": 23,
+   "id": "c23",
+   "group": "공동체·리더십",
+   "label": "봉사활동",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [
+    {
+     "id": "c23.f01",
+     "label": "총 봉사시간(h)",
+     "type": "number",
+     "format": "숫자",
+     "guide": "1365 등 인증 시간 합계"
+    }
+   ],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c23.t01",
+      "label": "구분",
+      "type": "enum",
+      "format": "[교내 / 교외(국내) / 국외 / 유학생 봉사]",
+      "options": [
+       "교내",
+       "교외(국내)",
+       "국외",
+       "유학생 봉사"
+      ]
+     },
+     {
+      "id": "c23.t02",
+      "label": "기관·내용",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c23.t03",
+      "label": "시간(h)",
+      "type": "number",
+      "format": "숫자"
+     },
+     {
+      "id": "c23.t04",
+      "label": "연월",
+      "type": "yearMonth",
+      "format": "YYYY-MM"
+     }
+    ],
+    "templateRows": 4
+   },
+   "meta": {
+    "출처": "1365 · 3품(인성)",
+    "확보 구분": "기존 + SKKU 확보가능",
+    "관련 역량": "대인관계 / 리더십 / 문화적수용능력",
+    "비고": "학년 보정(학기당 시간) 필요"
+   }
+  },
+  {
+   "no": 24,
+   "id": "c24",
+   "group": "공동체·리더십",
+   "label": "멘토링·학습공동체",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c24.t01",
+      "label": "유형",
+      "type": "enum",
+      "format": "[튜터 / 튜티 / 멘토 / 멘티 / 스터디 / 학습공동체]",
+      "options": [
+       "튜터",
+       "튜티",
+       "멘토",
+       "멘티",
+       "스터디",
+       "학습공동체"
+      ]
+     },
+     {
+      "id": "c24.t02",
+      "label": "프로그램명",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c24.t03",
+      "label": "역할·내용",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c24.t04",
+      "label": "기간(개월)",
+      "type": "number",
+      "format": "숫자"
+     }
+    ],
+    "templateRows": 3
+   },
+   "meta": {
+    "출처": "교수학습센터",
+    "확보 구분": "추가 제안",
+    "관련 역량": "소통능력 / 대인관계",
+    "비고": "교수 관심 '소통능력'의 '스터디 참여' 근거 확보"
+   }
+  },
+  {
+   "no": 25,
+   "id": "c25",
+   "group": "공동체·리더십",
+   "label": "팀프로젝트 동료평가",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c25.t01",
+      "label": "과목명",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c25.t02",
+      "label": "학기",
+      "type": "semester",
+      "format": "YYYY-1 / YYYY-2 / YYYY-여름 / YYYY-겨울"
+     },
+     {
+      "id": "c25.t03",
+      "label": "동료평가 점수",
+      "type": "number",
+      "format": "숫자"
+     },
+     {
+      "id": "c25.t04",
+      "label": "만점",
+      "type": "number",
+      "format": "숫자"
+     },
+     {
+      "id": "c25.t05",
+      "label": "평가 인원(명)",
+      "type": "number",
+      "format": "숫자"
+     },
+     {
+      "id": "c25.t06",
+      "label": "코멘트 요약",
+      "type": "text",
+      "format": "텍스트"
+     }
+    ],
+    "templateRows": 4
+   },
+   "meta": {
+    "출처": "LMS(i-Campus)",
+    "확보 구분": "추가 제안",
+    "관련 역량": "커뮤니케이션(협업) / 대인관계 / 리더십",
+    "비고": "대인관계 역량을 '활동 여부'가 아닌 '평판'으로 측정할 수 있는 유일한 근거"
+   }
+  },
+  {
+   "no": 26,
+   "id": "c26",
+   "group": "자격·인증",
+   "label": "자격증(어학)",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c26.t01",
+      "label": "시험명",
+      "type": "enum",
+      "format": "[TOEIC / TOEFL iBT / TOEIC Speaking / OPIc / HSK / JPT / JLPT / DELF/DALF / DELE / 기타]",
+      "options": [
+       "TOEIC",
+       "TOEFL iBT",
+       "TOEIC Speaking",
+       "OPIc",
+       "HSK",
+       "JPT",
+       "JLPT",
+       "DELF/DALF",
+       "DELE",
+       "기타"
+      ]
+     },
+     {
+      "id": "c26.t02",
+      "label": "점수",
+      "type": "number",
+      "format": "숫자"
+     },
+     {
+      "id": "c26.t03",
+      "label": "등급·레벨",
+      "type": "text",
+      "format": "예: IH, N1, 5급"
+     },
+     {
+      "id": "c26.t04",
+      "label": "응시일",
+      "type": "date",
+      "format": "YYYY-MM-DD"
+     },
+     {
+      "id": "c26.t05",
+      "label": "만료일",
+      "type": "date",
+      "format": "YYYY-MM-DD"
+     }
+    ],
+    "templateRows": 4
+   },
+   "meta": {
+    "출처": "학생 등록(성적표) · 3품(글로벌)",
+    "확보 구분": "기존 + SKKU 확보가능",
+    "관련 역량": "글로벌(언어 사용능력)",
+    "비고": "시험별 공통 척도 환산표 필요"
+   }
+  },
+  {
+   "no": 27,
+   "id": "c27",
+   "group": "자격·인증",
+   "label": "자격증(기타/전공)",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c27.t01",
+      "label": "자격증명",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c27.t02",
+      "label": "등급·급수",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c27.t03",
+      "label": "발급기관",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c27.t04",
+      "label": "취득일",
+      "type": "date",
+      "format": "YYYY-MM-DD"
+     }
+    ],
+    "templateRows": 5
+   },
+   "meta": {
+    "출처": "학생 등록 · 3품(창의-IT 활용)",
+    "확보 구분": "기존 + SKKU 확보가능",
+    "관련 역량": "자원·정보기술활용 / 직무전문성 / 디지털리터러시",
+    "비고": "자격증별 '등급·난이도' 매핑표 필요"
+   }
+  },
+  {
+   "no": 28,
+   "id": "c28",
+   "group": "자격·인증",
+   "label": "전문직·공직 시험",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c28.t01",
+      "label": "시험명",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c28.t02",
+      "label": "단계",
+      "type": "enum",
+      "format": "[응시 / 1차 합격 / 2차 합격 / 최종 합격]",
+      "options": [
+       "응시",
+       "1차 합격",
+       "2차 합격",
+       "최종 합격"
+      ]
+     },
+     {
+      "id": "c28.t03",
+      "label": "연도",
+      "type": "year",
+      "format": "YYYY"
+     }
+    ],
+    "templateRows": 2
+   },
+   "meta": {
+    "출처": "3품(창의-진로개발) 인증",
+    "확보 구분": "SKKU 확보가능",
+    "관련 역량": "직무전문성 / 도전정신",
+    "비고": "단계(1차·최종) 구분"
+   }
+  },
+  {
+   "no": 29,
+   "id": "c29",
+   "group": "자격·인증",
+   "label": "3품인증 취득현황",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [
+    {
+     "id": "c29.f01",
+     "label": "인성품",
+     "type": "enum",
+     "format": "목록",
+     "guide": "[취득 / 진행중 / 미취득]",
+     "options": [
+      "취득",
+      "진행중",
+      "미취득"
+     ]
+    },
+    {
+     "id": "c29.f02",
+     "label": "글로벌품",
+     "type": "enum",
+     "format": "목록",
+     "guide": "[취득 / 진행중 / 미취득]",
+     "options": [
+      "취득",
+      "진행중",
+      "미취득"
+     ]
+    },
+    {
+     "id": "c29.f03",
+     "label": "창의품",
+     "type": "enum",
+     "format": "목록",
+     "guide": "[취득 / 진행중 / 미취득]",
+     "options": [
+      "취득",
+      "진행중",
+      "미취득"
+     ]
+    },
+    {
+     "id": "c29.f04",
+     "label": "AI 영역",
+     "type": "enum",
+     "format": "목록",
+     "guide": "[취득 / 진행중 / 미취득]",
+     "options": [
+      "취득",
+      "진행중",
+      "미취득"
+     ]
+    },
+    {
+     "id": "c29.f05",
+     "label": "인턴십 영역",
+     "type": "enum",
+     "format": "목록",
+     "guide": "[취득 / 진행중 / 미취득]",
+     "options": [
+      "취득",
+      "진행중",
+      "미취득"
+     ]
+    }
+   ],
+   "table": null,
+   "meta": {
+    "출처": "3품인증 시스템",
+    "확보 구분": "SKKU 확보가능",
+    "관련 역량": "(복수 역량 종합)",
+    "비고": "하위 활동과 중복 가산 위험 → 가산점이 아닌 '참고 지표'로 권장"
+   },
+   "excludedFromScoring": true
+  },
+  {
+   "no": 30,
+   "id": "c30",
+   "group": "자격·인증",
+   "label": "비교과 이수시간",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [
+    {
+     "id": "c30.f01",
+     "label": "누적 이수시간(h)",
+     "type": "number",
+     "format": "숫자",
+     "guide": null
+    },
+    {
+     "id": "c30.f02",
+     "label": "기준 시간(h)",
+     "type": "number",
+     "format": "숫자",
+     "guide": "예: 90"
+    },
+    {
+     "id": "c30.f03",
+     "label": "집계 기준일",
+     "type": "date",
+     "format": "YYYY-MM-DD",
+     "guide": null
+    }
+   ],
+   "table": null,
+   "meta": {
+    "출처": "비교과 시스템",
+    "확보 구분": "SKKU 확보가능",
+    "관련 역량": "자기관리 / 종합적사고력(융합적 사고)",
+    "비고": "학년 보정 필요"
+   }
+  },
+  {
+   "no": 31,
+   "id": "c31",
+   "group": "진단·자기평가",
+   "label": "SSCA 학생성공역량진단",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [
+    {
+     "id": "c31.f01",
+     "label": "진단일",
+     "type": "date",
+     "format": "YYYY-MM-DD",
+     "guide": null
+    }
+   ],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c31.t01",
+      "label": "진단 역량명",
+      "type": "text",
+      "format": "결과지 표기 그대로"
+     },
+     {
+      "id": "c31.t02",
+      "label": "자기진단 점수",
+      "type": "number",
+      "format": "숫자"
+     },
+     {
+      "id": "c31.t03",
+      "label": "만점",
+      "type": "number",
+      "format": "숫자"
+     }
+    ],
+    "templateRows": 6
+   },
+   "meta": {
+    "출처": "학생성공 게이트웨이",
+    "확보 구분": "SKKU 확보가능",
+    "관련 역량": "전 역량(자기인식)",
+    "비고": "객관 점수에 합산하지 말고 '자기평가 vs 데이터 평가' 비교용으로 별도 표시"
+   },
+   "excludedFromScoring": true
+  },
+  {
+   "no": 32,
+   "id": "c32",
+   "group": "진단·자기평가",
+   "label": "학습경험진단",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [
+    {
+     "id": "c32.f01",
+     "label": "진단일",
+     "type": "date",
+     "format": "YYYY-MM-DD",
+     "guide": null
+    },
+    {
+     "id": "c32.f02",
+     "label": "종합 점수",
+     "type": "number",
+     "format": "숫자",
+     "guide": null
+    },
+    {
+     "id": "c32.f03",
+     "label": "만점",
+     "type": "number",
+     "format": "숫자",
+     "guide": null
+    },
+    {
+     "id": "c32.f04",
+     "label": "결과 요약",
+     "type": "text",
+     "format": "텍스트",
+     "guide": "결과지 요약 문구"
+    }
+   ],
+   "table": null,
+   "meta": {
+    "출처": "학생성공 게이트웨이",
+    "확보 구분": "SKKU 확보가능",
+    "관련 역량": "자기관리 / 학업성취",
+    "비고": "SSCA와 동일하게 비교용 권장"
+   },
+   "excludedFromScoring": true
+  },
+  {
+   "no": 33,
+   "id": "c33",
+   "group": "진단·자기평가",
+   "label": "활동 성찰 기록(STAR)",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c33.t01",
+      "label": "관련 카테고리 No",
+      "type": "number",
+      "format": "숫자 1~34"
+     },
+     {
+      "id": "c33.t02",
+      "label": "활동명",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c33.t03",
+      "label": "상황(S)",
+      "type": "narrative",
+      "format": "서술"
+     },
+     {
+      "id": "c33.t04",
+      "label": "과제·역할(T)",
+      "type": "narrative",
+      "format": "서술"
+     },
+     {
+      "id": "c33.t05",
+      "label": "행동(A)",
+      "type": "narrative",
+      "format": "서술"
+     },
+     {
+      "id": "c33.t06",
+      "label": "결과(R)",
+      "type": "narrative",
+      "format": "서술(수치 포함 권장)"
+     }
+    ],
+    "templateRows": 3
+   },
+   "meta": {
+    "출처": "학생 입력(포트폴리오)",
+    "확보 구분": "추가 제안",
+    "관련 역량": "리더십 / 문제해결력 / 커뮤니케이션 등 정성 역량",
+    "비고": "정성 루브릭이 판단할 '질적 근거'가 현재 거의 없음 → 가장 우선 확보 권장"
+   }
+  },
+  {
+   "no": 34,
+   "id": "c34",
+   "group": "진단·자기평가",
+   "label": "교수 관찰 코멘트",
+   "statusLabel": "데이터 상태 ▶",
+   "fields": [],
+   "table": {
+    "headerMarker": "No",
+    "columns": [
+     {
+      "id": "c34.t01",
+      "label": "작성자(직위)",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c34.t02",
+      "label": "관계",
+      "type": "enum",
+      "format": "[지도교수 / 수업 담당교수]",
+      "options": [
+       "지도교수",
+       "수업 담당교수"
+      ]
+     },
+     {
+      "id": "c34.t03",
+      "label": "관찰 역량",
+      "type": "text",
+      "format": "텍스트"
+     },
+     {
+      "id": "c34.t04",
+      "label": "코멘트",
+      "type": "narrative",
+      "format": "서술"
+     },
+     {
+      "id": "c34.t05",
+      "label": "작성일",
+      "type": "date",
+      "format": "YYYY-MM-DD"
+     }
+    ],
+    "templateRows": 2
+   },
+   "meta": {
+    "출처": "교수 입력",
+    "확보 구분": "추가 제안",
+    "관련 역량": "교수 관심 역량 전반",
+    "비고": "입력 부담 고려해 선택 항목으로"
+   }
+  }
+ ]
+}
