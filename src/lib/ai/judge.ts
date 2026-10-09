@@ -84,8 +84,8 @@ export interface JudgeCache {
   set(key: string, value: QualJudgment): void;
 }
 
-/** 한 학생의 서술 판정을 모두 수행한다. call이 없으면(AI 미설정) 캐시에 있는 것만 쓴다. */
-export async function judgeStudent(call: StructuredCall | null, rubric: Rubric, rubricKey: string, student: ParsedStudent, cache: JudgeCache, rejudge = false): Promise<QualMap> {
+/** 한 학생의 서술 판정을 모두 수행한다. call이 없으면(AI 미설정) 캐시에 있는 것만 쓰고, fallback이 있으면 그것으로 채운다(저장하지 않음). */
+export async function judgeStudent(call: StructuredCall | null, rubric: Rubric, rubricKey: string, student: ParsedStudent, cache: JudgeCache, rejudge = false, fallback?: (text: string) => QualJudgment): Promise<QualMap> {
   const result: QualMap = {};
   for (const competency of rubric.competencies) {
     for (const item of competency.items) {
@@ -101,6 +101,8 @@ export async function judgeStudent(call: StructuredCall | null, rubric: Rubric, 
           const judgment = await judgeSource(call, competency, item, source, text);
           cache.set(key, judgment);
           result[source.id] = judgment;
+        } else if (fallback) {
+          result[source.id] = fallback(text);
         }
       }
     }

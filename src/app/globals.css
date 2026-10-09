@@ -1,7 +1,63 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+
+  --color-ink: #191f28;
+  --color-sub: #4e5968;
+  --color-mute: #8b95a1;
+  --color-faint: #b0b8c1;
+  --color-line: #e5e8eb;
+  --color-fill: #f2f4f6;
+  --color-soft: #f9fafb;
+
+  --color-brand: #3182f6;
+  --color-brand-dark: #1b64da;
+  --color-brand-soft: #e8f3ff;
+  --color-vio: #6b5ce7;
+  --color-vio-soft: #efedff;
+
+  --color-good: #03b26c;
+  --color-good-soft: #e3f8ef;
+  --color-warn: #dd7d02;
+  --color-warn-soft: #fff3e0;
+  --color-bad: #f04452;
+  --color-bad-soft: #ffeeee;
+
+  --shadow-card: 0 1px 2px rgb(0 27 55 / 0.04), 0 8px 24px rgb(0 27 55 / 0.05);
+  --shadow-pop: 0 12px 40px rgb(0 27 55 / 0.16);
+
+  --animate-rise: rise 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-fade: fade 0.2s ease both;
+  --animate-pop: pop 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.1) both;
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes pop {
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+}
+
 body {
-  background: #f8fafc;
-  color: #0f172a;
-  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  background: var(--color-fill);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  letter-spacing: -0.01em;
+  word-break: keep-all;
+}
+
+button, a, summary { -webkit-tap-highlight-color: transparent; }
+button:not(:disabled), summary, label[for], [role="button"] { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 2px; border-radius: 8px; }
+input[type="number"]::-webkit-inner-spin-button { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }

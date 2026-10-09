@@ -1,5 +1,5 @@
 import { workspaces } from "@/lib/db";
-import { currentWorkspace, fail, selectWorkspace } from "@/lib/session";
+import { currentWorkspace, fail, leaveWorkspace, selectWorkspace } from "@/lib/session";
 
 export async function GET() {
   return Response.json({ workspaces: workspaces.list(), current: await currentWorkspace() });
@@ -19,4 +19,10 @@ export async function PUT(request: Request) {
   if (!ws) return fail("없는 작업 공간입니다", 404);
   await selectWorkspace(ws.id);
   return Response.json({ current: ws });
+}
+
+/** 작업 공간 선택만 푼다. 데이터는 지우지 않는다. */
+export async function DELETE() {
+  await leaveWorkspace();
+  return Response.json({ current: null });
 }
